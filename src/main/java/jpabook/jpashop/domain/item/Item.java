@@ -15,7 +15,7 @@ import java.util.List;
 @DiscriminatorColumn(name = "dtype")
 @Getter
 @Setter
-public abstract class Item {
+public class Item {
 
     @Id
     @GeneratedValue
