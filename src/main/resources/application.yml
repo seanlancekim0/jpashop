@@ -7,7 +7,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+#      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         # show_sql: true
@@ -15,6 +16,8 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-#  쿼리 파라미터 로그 남기기
+  #  쿼리 파라미터 로그 남기기
   org.hibernate.orm.jdbc.bind: trace #스프링 부트 3.x, hibernate6
 #  org.hibernate.type: trace #스프링 부트 2.x, hibernate5
+
+

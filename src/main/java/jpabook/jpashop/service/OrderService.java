@@ -5,6 +5,7 @@ import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.grammars.ordering.OrderingParser;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class OrderService {
     /**
      * 주문
      */
+     /*
+      Controller에서 식별자만 받고 Service에서 Entity를 찾아서 관리한다.
+      이렇게 하면 한 Transaction 안에서 영속성 Entity를 찾아서 관리하므로
+      JPA가 commit시점에 변경감지(Dirty Checking) 해주는 이점을 얻을 수 있다!!
+     */
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
         // 엔티티 조회
@@ -32,7 +38,8 @@ public class OrderService {
 
         // 배송정보 생성
         Delivery delivery = new Delivery();
-        delivery.setAddress(member.getAdress());
+        delivery.setAddress(member.getAddress());
+        delivery.setStatus(DeliveryStatus.READY);
 
         // 주문 상품 생성 (단일상품)
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
@@ -65,9 +72,9 @@ public class OrderService {
     /**
      * 검색
      */
-//    public List<Order> searchOrders(OrderSearch orderSearch) {
-//        return orderRepository.finAll(orderSearch);
-//    }
+    public List<Order> searchOrders(OrderSearch orderSearch) {
+        return orderRepository.findAllByString(orderSearch);
+    }
 
 
 }

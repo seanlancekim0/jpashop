@@ -45,4 +45,10 @@ public class Item {
         }
         this.stockQuantity = restStcok;
     }
+
+    public void change(String name, int price, int StockQuantity) {
+        setName(name);
+        setPrice(price);
+        setStockQuantity(stockQuantity);
+    }
 }

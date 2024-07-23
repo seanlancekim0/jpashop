@@ -63,7 +63,12 @@ public class Order {
         Order order = new Order();
         order.setMember(member);
         order.setDelivery(delivery);
-        order.setOrderItems(Arrays.stream(orderItems).toList());
+        // 해당 코드는 Order과 OrderItem 간에 양방향으로 정보를 저장하지 않고 Order에만 orderItems 정보를 저장하여
+        // 생성된 OrderItem 객체의 Order 값이 null이 되는 문제가 발생했다.
+//        order.setOrderItems(Arrays.stream(orderItems).toList());
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;
